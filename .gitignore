@@ -2,7 +2,8 @@
 node_modules/
 .pnp
 .pnp.js
-
+.next
+.vscode/
 # Production
 /build
 /dist
@@ -74,7 +75,6 @@ dist
 
 # Gatsby files
 .cache/
-public
 
 # Storybook build outputs
 .out
