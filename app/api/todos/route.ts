@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { dbStatements, generateId } from '@/lib/db';
+import { Todo } from '@/lib/types';
 
 export async function GET(request: NextRequest) {
   try {
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
     // }
 
     const testUserId = 'hmj234c37ammjias6tj';
-    const todos = dbStatements.getTodosByUserId.all(testUserId).map(todo => ({
+    const todos = (dbStatements.getTodosByUserId.all(testUserId) as Todo[]).map(todo => ({
       ...todo,
       completed: Boolean(todo.completed)
     }));
@@ -55,7 +56,11 @@ export async function POST(request: NextRequest) {
       0
     );
 
-    const todo = dbStatements.getTodosByUserId.all(testUserId).find(t => t.id === todoId);
+    const todo = (dbStatements.getTodosByUserId.all(testUserId) as Todo[]).find(t => t.id === todoId);
+
+    if (!todo) {
+      return NextResponse.json({ error: 'Todo not found after creation' }, { status: 404 });
+    }
 
     return NextResponse.json({
       ...todo,

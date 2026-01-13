@@ -1,6 +1,7 @@
 {
   "name": "applyflow",
   "version": "0.1.0",
+  "description": "A personal job application tracking CRM system for job seekers",
   "private": true,
   "scripts": {
     "dev": "next dev",
